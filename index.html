@@ -181,6 +181,7 @@ save();render();
     const main=document.getElementById('main');
     main.onclick=null;
     previousRender();
+    document.body.classList.toggle('wardrobe-open',page==='wardrobe');
     if(page==='wardrobe'){
       MaeveWardrobe.mount(main,data,save);
       const shop=document.createElement('button');
