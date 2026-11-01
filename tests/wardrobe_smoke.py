@@ -12,6 +12,13 @@ with sync_playwright() as p:
         errors = []
         page.on('pageerror', lambda e: errors.append(str(e)))
         page.goto(URL)
+        portrait = page.locator('.wobblehorn-map-portrait')
+        assert portrait.count() == 1
+        assert page.evaluate("async () => {const image = document.querySelector('.wobblehorn-map-portrait'); await image.decode(); return image.naturalWidth > 0;}")
+        assert portrait.evaluate("e => getComputedStyle(e).pointerEvents") == 'none'
+        page.get_by_role('button', name='Visit The Wobbleworks', exact=True).tap()
+        assert 'Wobbleworks' in page.locator('#main').inner_text()
+        page.get_by_role('button', name='🏝️ Island', exact=True).tap()
         seed = page.evaluate('JSON.parse(localStorage.getItem("cupcake-island-v1"))')
         seed.update(stars=243, completed=['morning'], owned=['purplehoodie', 'rainbow', 'starshoes', 'cathead', 'lamp'], placed=['lamp'], customProgress={'keep': True})
         page.evaluate('(s)=>localStorage.setItem("cupcake-island-v1", JSON.stringify(s))', seed)

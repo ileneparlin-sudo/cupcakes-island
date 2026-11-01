@@ -38,3 +38,11 @@ asset is `assets/maeve-portrait-head.png`; it is a close recreation, not an
 identical extraction from the flattened map. The bow uses the reference’s blue
 and pink palette. Outfit, streak and accessory layers remain independently
 customizable, with the same save format and reward ownership rules.
+
+## Professor Wobblehorn map correction
+
+The baked-in owl-like professor portrait is replaced with a unicorn portrait
+through `island-portraits.js`. The replacement map asset is clipped to the
+professor area; the original map renders everywhere else, preserving labels,
+landmarks, and tap targets. The overlay ignores pointer events and scales with
+the map in whole-island and zoomed views. No progress or save changes are made.
