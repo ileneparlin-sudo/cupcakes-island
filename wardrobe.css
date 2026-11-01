@@ -12,3 +12,10 @@ body.wardrobe-open #demoCelebration,body.wardrobe-open #buildLabel{display:none}
 .dashboard-mascot--fizzbert{left:23.45%;top:0;width:8.8%;height:12.1%}
 .dashboard-mascot--wobblehorn{left:64.5%;top:0;width:15.9%;height:15%}
 @media(max-width:650px){.labDuo .character-sprite{height:170px}}
+
+/* Twinkle Threads shares the same boutique stage in the isolated preview. */
+.maeve-stage{background:#f8def3 url('assets/twinkle-threads.webp') center/cover;border-radius:28px;padding-top:160px;min-height:570px}
+.maeve-stage .maeve-art{max-width:245px;filter:drop-shadow(0 5px 4px #65412c44)}
+.maeve-sticker,.maeve-stage>p{background:#fff7edee;border-radius:12px;padding:6px 10px;color:#784e7e}
+.maeve-stage>p{display:inline-block}.maeve-sticker{position:absolute;top:15px;left:50%;transform:translateX(-50%);white-space:nowrap}
+@media(max-width:650px){.maeve-stage{padding-top:120px;min-height:470px}.maeve-stage .maeve-art{max-width:225px}}

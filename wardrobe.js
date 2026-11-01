@@ -5,14 +5,14 @@ window.MaeveWardrobe = (() => {
     top: [['purple','Lavender','#a78be4'],['pink','Bubblegum','#f596c3'],['mint','Mint','#86d9ca']],
     bottom: [['pink','Petal pink','#f6a0ce'],['purple','Lilac','#bfa0ec'],['blue','Sky blue','#91d0ed']],
     shoes: [['pink','Rose','#ec83b7'],['purple','Violet','#a18add'],['blue','Ocean','#7dc4e4']],
-    accessory: [['bow','Ribbon bow','#f080b6'],['stars','Star clips','#ffdc7e'],['none','No accessory','#eee3f4']]
+    accessory: [['bow','Blue bow','#72d9ed'],['pinkbow','Pink bow','#f080b6'],['stars','Star clips','#ffdc7e'],['none','No accessory','#eee3f4']]
   };
   const labels = {hair:'Hair streaks',top:'Cozy hoodies',bottom:'Twirl skirts',shoes:'Sneakers',accessory:'Hair accessories'};
   function choices(data,key) {
     const list=options[key].slice();
     if(key==='top' && data.owned?.includes('rainbow')) list.push(['rainbow','Rainbow reward','#ffd278']);
     if(key==='shoes' && data.owned?.includes('starshoes')) list.push(['starshoes','Starry high-tops','#ffe092']);
-    if(key==='accessory' && data.owned?.includes('cathead')) list.push(['cathead','Cat-ear headphones','#b39ae7']);
+    if(key==='accessory' && data.owned?.includes('cathead')) list.push(['cathead','Pink cat-ear headphones','#f299ce']);
     return list;
   }
   function color(key,value) {return options[key].find(x=>x[0]===value)?.[2] || options[key][0][2]}
@@ -35,11 +35,11 @@ window.MaeveWardrobe = (() => {
     ${d.shoes==='starshoes'?'<path d="M110 373l3 4 5-1-3 4 1 5-4-3-4 2 1-5-3-3Z M207 373l3 4 5-1-3 4 1 5-4-3-4 2 1-5-3-3Z" fill="#ffe39d" stroke="none"/>':''}
     <image href="assets/maeve-portrait-head.png" x="25" y="-8" width="270" height="300" preserveAspectRatio="xMidYMid meet" data-portrait-head="true"/>
     ${d.hair==='brown'?'':`<g fill="none" stroke="${streak}" stroke-width="3" opacity=".65"><path d="M86 122Q69 142 83 155T76 185T82 218"/><path d="M238 139Q251 155 239 173T246 205T238 232"/></g>`}
-    ${accessory==='bow'?'<path d="M93 63Q61 34 68 72Q65 93 94 76Q125 91 118 65Q121 38 93 63Z" fill="#72d9ed"/><path d="M75 60L85 66M104 62L111 69" stroke="#d69be9" stroke-width="5"/><circle cx="94" cy="70" r="8" fill="#f79dd2"/>':accessory==='stars'?'<path d="M84 55l5 11 12 1-9 8 3 12-11-6-11 6 3-12-9-8 12-1Z M221 59l4 8 9 1-7 6 2 9-8-5-8 5 2-9-7-6 9-1Z" fill="#ffe19b"/>':accessory==='cathead'?'<path d="M78 130Q53 28 160 26Q267 28 242 130" fill="none" stroke="#aa8bdf" stroke-width="11"/><path d="M89 59L84 13L121 36M199 36L236 13L231 59" fill="#c9adf0"/><rect x="68" y="122" width="21" height="47" rx="10" fill="#c9adf0"/><rect x="231" y="122" width="21" height="47" rx="10" fill="#c9adf0"/>':''}
+    ${['bow','pinkbow'].includes(accessory)?'<path d="M93 63Q61 34 68 72Q65 93 94 76Q125 91 118 65Q121 38 93 63Z" fill="'+(accessory==='pinkbow'?'#f080b6':'#72d9ed')+'"/><path d="M75 60L85 66M104 62L111 69" stroke="#d69be9" stroke-width="5"/><circle cx="94" cy="70" r="8" fill="#f79dd2"/>':accessory==='stars'?'<path d="M84 55l5 11 12 1-9 8 3 12-11-6-11 6 3-12-9-8 12-1Z M221 59l4 8 9 1-7 6 2 9-8-5-8 5 2-9-7-6 9-1Z" fill="#ffe19b"/>':accessory==='cathead'?'<path d="M78 130Q53 28 160 26Q267 28 242 130" fill="none" stroke="#e27ab9" stroke-width="11"/><path d="M89 59L84 13L121 36M199 36L236 13L231 59" fill="#f7afd8"/><rect x="68" y="122" width="21" height="47" rx="10" fill="#f7afd8"/><rect x="231" y="122" width="21" height="47" rx="10" fill="#f7afd8"/>':''}
     </g></svg>`;
   }
   function markup(d) {
-    return `<section class="maeve-wardrobe"><header><span class="maeve-eyebrow">CUPCAKE ISLAND · STYLE STUDIO</span><h1>Made for Maeve <span>♡</span></h1><p>A little sparkle. A cozy hoodie. A look that’s all yours.</p></header><div class="maeve-layout"><div class="maeve-stage"><span class="maeve-sticker">✦ Hello, lovely!</span><div data-maeve-avatar>${avatar(d)}</div><p>Maeve’s outfit <span aria-hidden="true">✧</span></p></div><div class="maeve-options">${Object.keys(options).map(k=>`<fieldset><legend>${labels[k]}</legend><div class="maeve-swatches">${choices(d,k).map(([v,n,c])=>`<button type="button" data-outfit-key="${k}" data-outfit-value="${v}" aria-pressed="${(d[k] || (k==='accessory'?'bow':''))===v}" style="--swatch:${c}"><span class="maeve-dot" aria-hidden="true"></span>${n}<span class="maeve-check" aria-hidden="true">✓</span></button>`).join('')}</div></fieldset>`).join('')}<p class="maeve-save" role="status">Your look saves automatically ✨</p><p class="maeve-shop-note">Collected outfits stay yours. Find more in the Star Shop.</p></div></div></section>`;
+    return `<section class="maeve-wardrobe"><header><span class="maeve-eyebrow">WELCOME TO TWINKLE THREADS</span><h1>Twinkle Threads <span>♡</span></h1><p>Try on a little magic. Your very own boutique awaits.</p></header><div class="maeve-layout"><div class="maeve-stage"><span class="maeve-sticker">✦ Hello, lovely!</span><div data-maeve-avatar>${avatar(d)}</div><p>Maeve’s outfit <span aria-hidden="true">✧</span></p></div><div class="maeve-options">${Object.keys(options).map(k=>`<fieldset><legend>${labels[k]}</legend><div class="maeve-swatches">${choices(d,k).map(([v,n,c])=>`<button type="button" data-outfit-key="${k}" data-outfit-value="${v}" aria-pressed="${(d[k] || (k==='accessory'?'bow':''))===v}" style="--swatch:${c}"><span class="maeve-dot" aria-hidden="true"></span>${n}<span class="maeve-check" aria-hidden="true">✓</span></button>`).join('')}</div></fieldset>`).join('')}<p class="maeve-save" role="status">Your look saves automatically ✨</p><p class="maeve-shop-note">Collected outfits stay yours. Find more in the Star Shop.</p></div></div></section>`;
   }
   function mount(root,data,onChange) {
     root.innerHTML=markup(data);
