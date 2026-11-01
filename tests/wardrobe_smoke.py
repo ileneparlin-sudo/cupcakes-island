@@ -19,6 +19,8 @@ with sync_playwright() as p:
         baseline = page.evaluate('JSON.parse(localStorage.getItem("cupcake-island-v1"))')
         page.get_by_role('button', name='👗 Wardrobe', exact=True).tap()
         assert page.locator('.maeve-art').count() == 1
+        assert page.locator('[data-portrait-head]').count() == 1
+        assert page.evaluate("async () => {const image = new Image(); image.src = document.querySelector('[data-portrait-head]').getAttribute('href'); await image.decode(); return image.naturalWidth > 0;}")
         expected = {}
         for key in ['hair', 'top', 'bottom', 'shoes', 'accessory']:
             buttons = page.locator(f'[data-outfit-key="{key}"]')

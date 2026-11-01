@@ -29,3 +29,12 @@ failure messaging, and phone/tablet/desktop layouts.
 Real iPhone Safari and Samsung hardware validation remains a manual review step.
 The browser checks emulate touch and viewport sizes in Chromium.
 No production deployment or merge is part of this change.
+
+## Portrait consistency update
+
+The wardrobe head now uses a transparent illustration recreated from the island
+portrait reference, replacing the simplified vector face and hair. The new
+asset is `assets/maeve-portrait-head.png`; it is a close recreation, not an
+identical extraction from the flattened map. The bow uses the reference’s blue
+and pink palette. Outfit, streak and accessory layers remain independently
+customizable, with the same save format and reward ownership rules.
