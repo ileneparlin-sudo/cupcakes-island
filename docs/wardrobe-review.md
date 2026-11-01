@@ -1,68 +1,50 @@
-# Maeve's wardrobe upgrade
+# Wardrobe and character review
 
-The wardrobe uses a layered SVG illustration with brown eyes, wavy brown hair,
+Maeve's wardrobe uses a layered illustration with brown eyes, chestnut curls,
 colored streaks, rosy cheeks, hoodies, pleated skirts, sneakers and accessories.
 The shared implementation is in `wardrobe.js` and `wardrobe.css`.
 
-`wardrobe-preview.html` is an isolated, interactive design preview using sample
-state. It never reads or writes the game's storage. Run a static server from the
-repository root (`python3 -m http.server 8000`) and open that file through it.
-The normal game uses the same component through its existing Wardrobe navigation.
+`wardrobe-preview.html` is an isolated interactive preview with sample state.
+It never reads or writes game storage. Run a static server from the repository
+root (`python3 -m http.server 8000`) and open that file through the server.
+The game uses the same component through its existing Wardrobe navigation.
 
-Existing `cupcake-island-v1` outfit fields and the existing save function are
-retained. Only hair, top, bottom, shoes and the new accessory field are updated.
-No save migration or progress reset is introduced. An absent accessory defaults
-to a bow. Rainbow hoodies, starry shoes and cat-ear headphones remain gated by
-existing shop ownership and existing prices. A storage failure displays an
-honest save error; the outfit remains visible for the current session.
+Existing `cupcake-island-v1` outfit fields and save function are retained. Only
+hair, top, bottom, shoes and accessory fields change. No progress reset or save
+migration is introduced. An absent accessory defaults to a bow. Shop ownership
+and prices are unchanged. A storage failure displays an explicit save error.
+Brown eyes are fixed independently of outfit choices, including Maeve's small
+dashboard portrait (a localized eye overlay preserves the rest of the map).
+
+## Full-body animal characters
+
+`characters.js` defines one transparent full-body sprite each for Fizzbert and
+Professor Wobblehorn. The dashboard, lab and flying celebration all reuse the
+same sprites. Fizzbert has feathery external gills, four feet and a long finned
+tail. Wobblehorn has a golden horn, goofy grin, crooked glasses, floppy wizard
+hat and four hooves. Both use playful expressions and poses.
+
+The flight renders the animals without picture frames, cards or rectangular
+backgrounds. Existing rainbow flight, cleanup and reduced-motion behavior remain.
+`island-portraits.js` clears only the original mascot regions with a clipped
+sky background plate, then draws the shared animal sprites above it. Map labels,
+tap targets and navigation are preserved. `assets/island-map.png` remains the
+original map and is unchanged outside the displayed localized corrections.
 
 ## Validation
 
-With the static server running, run `python3 tests/wardrobe_smoke.py`.
-Requires Python Playwright and Chromium at `/usr/bin/chromium` (provided by the
-cloud environment). Browser/socket execution may require tool sandbox permission.
-Tests use disposable contexts, never personal game progress. Coverage includes
-all wardrobe options, reward gating/purchase, save/reload, preservation of
-non-outfit progress, 48px touch targets, all 11 navigation destinations, storage
-failure messaging, and phone/tablet/desktop layouts.
+With the static server running:
 
-Real iPhone Safari and Samsung hardware validation remains a manual review step.
-The browser checks emulate touch and viewport sizes in Chromium.
+- `python3 tests/characters_smoke.py`
+- `python3 tests/maeve_eyes_smoke.py`
+- `python3 tests/wardrobe_smoke.py`
+
+Tests require Python Playwright, Pillow and Chromium at `/usr/bin/chromium`,
+provided by the cloud environment. Browser/socket execution may require tool
+sandbox permission. Tests use disposable browser contexts, never personal game
+progress. Coverage includes sprite consistency and transparency, frameless flight
+movement and cleanup, reduced motion, brown eyes, all wardrobe options,
+reward gating/purchase, save/reload, preservation of non-outfit progress,
+touch targets, all 11 navigation destinations, and responsive layouts.
+Real iPhone Safari and Samsung hardware testing remains a manual review step.
 No production deployment or merge is part of this change.
-
-## Portrait consistency update
-
-The wardrobe head now uses a transparent illustration recreated from the island
-portrait reference, replacing the simplified vector face and hair. The new
-asset is `assets/maeve-portrait-head.png`; it is a close recreation, not an
-identical extraction from the flattened map. The bow uses the reference’s blue
-and pink palette. Outfit, streak and accessory layers remain independently
-customizable, with the same save format and reward ownership rules.
-
-## Professor Wobblehorn map correction
-
-The baked-in owl-like professor portrait is replaced with a unicorn portrait
-through `island-portraits.js`. The replacement map asset is clipped to the
-professor area; the original map renders everywhere else, preserving labels,
-landmarks, and tap targets. The overlay ignores pointer events and scales with
-the map in whole-island and zoomed views. No progress or save changes are made.
-
-## Shared character artwork
-
-`characters.js` defines the canonical dashboard image and portrait viewport for
-Professor Wobblehorn and Fizzbert. The lab and celebration reuse those exact
-image regions rather than separate SVG interpretations. `assets/island-map.png`
-is the original embedded map, moved unchanged to a cacheable asset; its Fizzbert
-portrait is reused as-is. Wobblehorn uses the existing corrected dashboard asset.
-Existing animation, captions, routines, rewards, and save logic are retained.
-Run `python3 tests/characters_smoke.py` with the static server running to verify
-shared image sources, loading, animation cleanup, navigation and unchanged saves.
-
-## Maeve's brown eyes
-
-The shared wardrobe/preview head asset now has brown irises. The dashboard uses
-an eye-area overlay from `assets/maeve-map-brown-eyes.png`, preserving the rest
-of the original map and its shared Fizzbert portrait. Legacy vector Maeve also
-uses brown eyes. Eye color is fixed and independent of outfit/hair selections.
-`python3 tests/maeve_eyes_smoke.py` checks brown iris pixels in the rendered map
-and head asset, shared preview use, and unchanged saved progress.

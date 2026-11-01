@@ -1,13 +1,13 @@
-/* Canonical character portraits: render the exact dashboard artwork everywhere. */
+/* One transparent full-body sprite per character, shared across every surface. */
 window.CupcakeCharacters = (() => {
   const sources = {
-    wobblehorn: {url:'assets/wobblehorn-map.png',viewBox:'995 0 235 154',name:'Professor Wobblehorn, the unicorn professor'},
-    fizzbert: {url:'assets/island-map.png',viewBox:'365 12 125 115',name:'Fizzbert, the blue and pink axolotl'}
+    wobblehorn: {url:'assets/wobblehorn-sprite.png',name:'Professor Wobblehorn, a silly unicorn with a golden horn, crooked glasses and a floppy wizard hat'},
+    fizzbert: {url:'assets/fizzbert-sprite.png',name:'Fizzbert, a silly turquoise axolotl with feathery pink gills, four feet and a long finned tail'}
   };
-  function portrait(id) {
+  function sprite(id) {
     const character=sources[id];
     if(!character) throw new Error('Unknown Cupcake Island character');
-    return `<svg class="character-portrait" data-character="${id}" viewBox="${character.viewBox}" role="img" aria-label="${character.name}" xmlns="http://www.w3.org/2000/svg"><image href="${character.url}" width="1536" height="1024"/></svg>`;
+    return `<img class="character-sprite" data-character="${id}" src="${character.url}" alt="${character.name}" draggable="false">`;
   }
-  return {sources,portrait};
+  return {sources,sprite};
 })();

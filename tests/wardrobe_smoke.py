@@ -12,9 +12,9 @@ with sync_playwright() as p:
         errors = []
         page.on('pageerror', lambda e: errors.append(str(e)))
         page.goto(URL)
-        portrait = page.locator('.wobblehorn-map-portrait')
+        portrait = page.locator('.dashboard-mascot [data-character="wobblehorn"]')
         assert portrait.count() == 1
-        assert page.evaluate("async () => {const image = document.querySelector('.wobblehorn-map-portrait'); await image.decode(); return image.naturalWidth > 0;}")
+        assert portrait.evaluate("async image => {await image.decode(); return image.naturalWidth > 0;}")
         assert portrait.evaluate("e => getComputedStyle(e).pointerEvents") == 'none'
         page.get_by_role('button', name='Visit The Wobbleworks', exact=True).tap()
         assert 'Wobbleworks' in page.locator('#main').inner_text()
