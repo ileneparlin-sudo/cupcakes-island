@@ -48,3 +48,19 @@ reward gating/purchase, save/reload, preservation of non-outfit progress,
 touch targets, all 11 navigation destinations, and responsive layouts.
 Real iPhone Safari and Samsung hardware testing remains a manual review step.
 No production deployment or merge is part of this change.
+
+## Cottage interior
+
+`cottage.js` and `cottage.css` render a furnished illustrated cottage with timber
+beams, a patchwork bed, fireplace, kitchen, garden window and bookshelves.
+Owned beanbag, moon lamp and aquarium decorations appear as illustrated objects
+at fixed positions in the room. Their scene controls and inventory buttons use
+the existing ownership, placement, toggle and save logic. Decorations can be
+added or put away with touch or keyboard; no new purchases or progression rules
+are introduced. Existing room colors become pink, ocean and sunset lighting.
+
+`python3 tests/cottage_smoke.py` checks furnished/empty-inventory rendering,
+existing owned placement, touch targets, adding/removing decorations, visible
+theme changes, save/reload, unchanged unrelated progress, navigation and a new
+shop purchase across phone, tablet and desktop sizes. Placement is fixed; this
+change does not introduce dragging or a furniture editor.
