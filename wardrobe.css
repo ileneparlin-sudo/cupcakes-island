@@ -2,3 +2,8 @@
 
 /* Keep existing floating demo controls from covering outfit choices. */
 body.wardrobe-open #demoCelebration,body.wardrobe-open #buildLabel{display:none}
+
+/* Shared dashboard portraits in the lab and celebration flight. */
+.character-portrait{display:block;width:100%;height:auto;border-radius:18px;border:3px solid #fff;box-shadow:0 4px 12px #74409c22;background:#bdeaff;overflow:hidden}
+.labDuo .character-portrait{max-height:180px;margin:0 auto 10px}
+.wobbleSprite .character-portrait,.fizzSprite .character-portrait{height:100%;object-fit:contain}

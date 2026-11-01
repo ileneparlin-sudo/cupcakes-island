@@ -46,3 +46,14 @@ through `island-portraits.js`. The replacement map asset is clipped to the
 professor area; the original map renders everywhere else, preserving labels,
 landmarks, and tap targets. The overlay ignores pointer events and scales with
 the map in whole-island and zoomed views. No progress or save changes are made.
+
+## Shared character artwork
+
+`characters.js` defines the canonical dashboard image and portrait viewport for
+Professor Wobblehorn and Fizzbert. The lab and celebration reuse those exact
+image regions rather than separate SVG interpretations. `assets/island-map.png`
+is the original embedded map, moved unchanged to a cacheable asset; its Fizzbert
+portrait is reused as-is. Wobblehorn uses the existing corrected dashboard asset.
+Existing animation, captions, routines, rewards, and save logic are retained.
+Run `python3 tests/characters_smoke.py` with the static server running to verify
+shared image sources, loading, animation cleanup, navigation and unchanged saves.
