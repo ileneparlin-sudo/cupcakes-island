@@ -64,3 +64,19 @@ existing owned placement, touch targets, adding/removing decorations, visible
 theme changes, save/reload, unchanged unrelated progress, navigation and a new
 shop purchase across phone, tablet and desktop sizes. Placement is fixed; this
 change does not introduce dragging or a furniture editor.
+
+## Wobbleworks laboratory
+
+`wobbleworks.js` and `wobbleworks.css` render a furnished magical laboratory with
+bubbling flasks, copper pipes, glass coils, colorful smoke and a rainbow machine.
+The same full-body character sprites stand inside the scene. The existing
+experiment button now triggers a brief cartoon cloud/star burst and the existing
+animal flight. The button pauses for two seconds to prevent stacked bursts and
+then becomes available again. Status text announces the experiment; no stars,
+rewards, routines or saved progress change. Reduced-motion mode uses static
+smoke/burst feedback and retains the readable status without flying animals.
+
+Run `python3 tests/wobbleworks_smoke.py` to check the scene, image loading,
+phone/tablet/desktop layouts, smoke, button touch size, temporary effects,
+repeated and keyboard activation, cleanup, navigation during effects, unchanged
+saves and reduced-motion behavior.
