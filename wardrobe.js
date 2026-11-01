@@ -19,7 +19,7 @@ window.MaeveWardrobe = (() => {
   function avatar(d) {
     const streak=color('hair',d.hair), hoodie=d.top==='rainbow'?'url(#maeve-rainbow)':color('top',d.top), skirt=color('bottom',d.bottom), shoes=d.shoes==='starshoes'?'#645090':color('shoes',d.shoes);
     const accessory=choices(d,'accessory').some(x=>x[0]===d.accessory)?d.accessory:'bow';
-    return `<svg class="maeve-art" viewBox="0 0 320 420" role="img" aria-label="Maeve matching the island portrait, with glossy eyes, chestnut curls, ${d.hair==='brown'?'natural brown':'colored'} streaks and her chosen outfit" xmlns="http://www.w3.org/2000/svg">
+    return `<svg class="maeve-art" viewBox="0 0 320 420" role="img" aria-label="Maeve matching the island portrait, with glossy brown eyes, chestnut curls, ${d.hair==='brown'?'natural brown':'colored'} streaks and her chosen outfit" xmlns="http://www.w3.org/2000/svg">
     <defs><linearGradient id="maeve-hair" x2=".8" y2="1"><stop stop-color="#98634b"/><stop offset=".5" stop-color="#684134"/><stop offset="1" stop-color="#482e32"/></linearGradient><linearGradient id="maeve-skin" x2=".7" y2="1"><stop stop-color="#ffe1cc"/><stop offset="1" stop-color="#f3b9a1"/></linearGradient><linearGradient id="maeve-rainbow" x2="1" y2="1"><stop stop-color="#ff9ac9"/><stop offset=".35" stop-color="#ffe295"/><stop offset=".65" stop-color="#9ce4d6"/><stop offset="1" stop-color="#b99bec"/></linearGradient><radialGradient id="maeve-iris"><stop stop-color="#c28a4e"/><stop offset="1" stop-color="#59372d"/></radialGradient></defs>
     <ellipse cx="160" cy="399" rx="93" ry="12" fill="#bba3d0" opacity=".3"/>
     <g stroke="#593948" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">

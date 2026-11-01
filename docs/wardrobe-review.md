@@ -57,3 +57,12 @@ portrait is reused as-is. Wobblehorn uses the existing corrected dashboard asset
 Existing animation, captions, routines, rewards, and save logic are retained.
 Run `python3 tests/characters_smoke.py` with the static server running to verify
 shared image sources, loading, animation cleanup, navigation and unchanged saves.
+
+## Maeve's brown eyes
+
+The shared wardrobe/preview head asset now has brown irises. The dashboard uses
+an eye-area overlay from `assets/maeve-map-brown-eyes.png`, preserving the rest
+of the original map and its shared Fizzbert portrait. Legacy vector Maeve also
+uses brown eyes. Eye color is fixed and independent of outfit/hair selections.
+`python3 tests/maeve_eyes_smoke.py` checks brown iris pixels in the rendered map
+and head asset, shared preview use, and unchanged saved progress.
