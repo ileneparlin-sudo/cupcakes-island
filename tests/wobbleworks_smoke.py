@@ -1,3 +1,4 @@
+from browser_helpers import visit
 """Verify the lab interior, temporary experiment effects and unchanged progress."""
 from playwright.sync_api import sync_playwright
 with sync_playwright() as p:
@@ -8,6 +9,7 @@ with sync_playwright() as p:
         errors=[]
         page.on('pageerror',lambda e:errors.append(str(e)))
         page.goto('http://127.0.0.1:8000')
+        visit(page,'island')
         before=page.evaluate('localStorage.getItem("cupcake-island-v1")')
         sources=page.evaluate('Object.fromEntries(Object.entries(CupcakeCharacters.sources).map(([k,v])=>[k,v.url]))')
         page.get_by_role('button',name='Visit The Wobbleworks',exact=True).tap()
@@ -36,18 +38,19 @@ with sync_playwright() as p:
         button.focus()
         page.keyboard.press('Enter')
         assert button.is_disabled()
-        page.get_by_role('button',name='👗 Wardrobe',exact=True).tap()
+        visit(page,'wardrobe')
         page.wait_for_timeout(2200)
         assert page.locator('.maeve-art').count()==1
-        page.get_by_role('button',name='🏝️ Island',exact=True).tap()
+        visit(page,'island')
         assert page.locator('.mapArtwork').is_visible()
-        assert page.locator('#demoCelebration').is_visible()
+        assert page.locator('#demoCelebration').is_hidden()
         assert not errors,errors
         context.close()
         print(f'PASS {width}x{height}: lab interior, shared animals, smoke, burst, cooldown, repeat/keyboard activation, navigation during effects, unchanged saves')
     context=browser.new_context(reduced_motion='reduce')
     page=context.new_page()
     page.goto('http://127.0.0.1:8000')
+    visit(page,'island')
     page.get_by_role('button',name='Visit The Wobbleworks',exact=True).click()
     assert page.locator('.lab-smoke-puff').first.evaluate('e=>getComputedStyle(e).animationName')=='none'
     page.get_by_role('button',name='🌈 Try the rainbow experiment',exact=True).click()

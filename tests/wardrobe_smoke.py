@@ -1,3 +1,4 @@
+from browser_helpers import visit
 """Run with the static server on port 8000: python3 tests/wardrobe_smoke.py."""
 import json
 from pathlib import Path
@@ -12,19 +13,20 @@ with sync_playwright() as p:
         errors = []
         page.on('pageerror', lambda e: errors.append(str(e)))
         page.goto(URL)
+        visit(page,'island')
         portrait = page.locator('.dashboard-mascot [data-character="wobblehorn"]')
         assert portrait.count() == 1
         assert portrait.evaluate("async image => {await image.decode(); return image.naturalWidth > 0;}")
         assert portrait.evaluate("e => getComputedStyle(e).pointerEvents") == 'none'
         page.get_by_role('button', name='Visit The Wobbleworks', exact=True).tap()
         assert 'Wobbleworks' in page.locator('#main').inner_text()
-        page.get_by_role('button', name='🏝️ Island', exact=True).tap()
+        visit(page,'island')
         seed = page.evaluate('JSON.parse(localStorage.getItem("cupcake-island-v1"))')
         seed.update(stars=243, completed=['morning'], owned=['purplehoodie', 'rainbow', 'starshoes', 'cathead', 'lamp'], placed=['lamp'], customProgress={'keep': True})
         page.evaluate('(s)=>localStorage.setItem("cupcake-island-v1", JSON.stringify(s))', seed)
         page.reload()
         baseline = page.evaluate('JSON.parse(localStorage.getItem("cupcake-island-v1"))')
-        page.get_by_role('button', name='👗 Wardrobe', exact=True).tap()
+        visit(page,'wardrobe')
         assert page.locator('.maeve-art').count() == 1
         assert page.locator('[data-portrait-head]').count() == 1
         assert page.evaluate("async () => {const image = new Image(); image.src = document.querySelector('[data-portrait-head]').getAttribute('href'); await image.decode(); return image.naturalWidth > 0;}")
@@ -46,14 +48,14 @@ with sync_playwright() as p:
         saved = page.evaluate('JSON.parse(localStorage.getItem("cupcake-island-v1"))')
         assert {k:v for k,v in saved.items() if k not in expected} == {k:v for k,v in baseline.items() if k not in expected}
         page.reload()
-        page.get_by_role('button', name='👗 Wardrobe', exact=True).tap()
+        visit(page,'wardrobe')
         for key, value in expected.items():
             assert page.locator(f'[data-outfit-key="{key}"][data-outfit-value="{value}"]').get_attribute('aria-pressed') == 'true'
         assert page.evaluate('document.documentElement.scrollWidth <= innerWidth')
-        for i in range(11):
-            page.locator('#nav button').nth(i).tap()
+        for route in ['home','island','day','wardrobe','room','learning','dream','pond','lab','rewards','mama']:
+            visit(page,route)
             assert page.locator('#main').inner_text().strip()
-        page.get_by_role('button', name='👗 Wardrobe', exact=True).tap()
+        visit(page,'wardrobe')
         page.evaluate("() => {Storage.prototype.setItem=function(){throw new Error('Storage blocked')}}")
         page.locator('[data-outfit-key="top"][data-outfit-value="mint"]').tap()
         assert 'could not be saved' in page.get_by_role('status').inner_text()
@@ -63,11 +65,12 @@ with sync_playwright() as p:
     # Locked rewards stay hidden; purchasing an existing reward exposes it.
     page = browser.new_page()
     page.goto(URL)
-    page.get_by_role('button', name='👗 Wardrobe', exact=True).click()
+    visit(page,'island')
+    visit(page,'wardrobe')
     assert page.locator('[data-outfit-value="rainbow"]').count() == 0
     page.get_by_role('button', name='Visit Star Shop 🎁', exact=True).click()
     page.locator('.item').filter(has_text='Rainbow Hoodie').get_by_role('button').click()
-    page.get_by_role('button', name='👗 Wardrobe', exact=True).click()
+    visit(page,'wardrobe')
     assert page.locator('[data-outfit-value="rainbow"]').get_attribute('aria-pressed') == 'true'
     assert page.evaluate('data.stars') == 25
     print('PASS reward purchase: existing price, ownership and auto-equipped rainbow retained')

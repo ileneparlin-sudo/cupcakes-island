@@ -1,3 +1,4 @@
+from browser_helpers import visit
 """Verify transparent full-body animals are shared across dashboard, lab and flight."""
 from pathlib import Path
 from PIL import Image
@@ -18,6 +19,7 @@ with sync_playwright() as p:
         errors = []
         page.on('pageerror', lambda e: errors.append(str(e)))
         page.goto('http://127.0.0.1:8000')
+        visit(page,'island')
         sources = {name:page.locator(f'.dashboard-mascot [data-character="{name}"]').get_attribute('src') for name in ['fizzbert', 'wobblehorn']}
         before = page.evaluate('localStorage.getItem("cupcake-island-v1")')
         page.get_by_role('button', name='🔎 Explore close up', exact=True).tap()
@@ -42,7 +44,7 @@ with sync_playwright() as p:
         assert page.evaluate('document.documentElement.scrollWidth <= innerWidth')
         page.wait_for_timeout(4200)
         assert page.locator('.celebration').count() == 0
-        page.get_by_role('button', name='🏝️ Island', exact=True).tap()
+        visit(page,'island')
         assert page.locator('.mapArtwork').count() == 1
         assert not errors, errors
         context.close()
@@ -50,6 +52,7 @@ with sync_playwright() as p:
     context=browser.new_context(reduced_motion='reduce')
     page=context.new_page()
     page.goto('http://127.0.0.1:8000')
+    visit(page,'island')
     page.evaluate("celebrate('Reduced motion check')")
     assert page.locator('.flightGroup').evaluate('e=>getComputedStyle(e).display') == 'none'
     print('PASS: reduced-motion preference hides moving animals')
