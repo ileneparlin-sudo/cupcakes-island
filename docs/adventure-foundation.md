@@ -115,3 +115,28 @@ malformed/future-save preservation; non-overlapping map targets; parent relockin
 and the existing wardrobe, cottage, lab, brown-eye and full-body character tests.
 A fresh Home request was also checked to avoid downloading the island map before
 exploration. Sound remains absent/muted. No production settings were touched.
+
+## Big-number Home dashboard
+
+`dashboard.js` and `dashboard.css` render the approved dashboard concept with
+live saved values instead of mock numbers. Little wins today counts unique true
+claims in the daily routine ledger, including supported completion. Help and
+postponement do not award a win. The counter does not shrink when Gentle Day hides
+optional steps. Stars shows the current spendable balance, and Treasures counts
+unique owned cosmetic/decor IDs, including starting clothes. Buying an item can
+reduce Stars and increase Treasures; daily rollover resets only today's wins,
+never earned currency or owned items.
+
+Home shows one next adventure and an illustrated Explore Island entrance, with
+Dress Up and My Day shortcuts. It does not display an overall unfinished-task
+total, streaks, penalties or comparisons. The decorative island preview is an
+external compressed WebP (~560 KB); the full interactive map still loads only
+when exploration is opened. The preview illustration is decorative; its button
+opens the actual interactive map.
+
+`python3 tests/dashboard_smoke.py` checks real initial values, help/postponement,
+reading deduplication, Gentle Day, purchases, duplicate inventory IDs, reload,
+links, daily reset without lost Stars/treasures, and large-number page overflow
+at 360×800, 390×844, 800×1280 and 1280×900. The adventure acceptance, wardrobe and
+model regression checks also passed after this update. Real-device testing
+remains manual.
